@@ -1,39 +1,25 @@
-﻿using EXILED;
+﻿using Exiled.API.Enums;
+using Exiled.API.Features;
+using System;
 using System.Diagnostics;
 
 namespace ShutDownTheFuckingServer
 {
-    public class Plugin : EXILED.Plugin
+    public class Plugin : Plugin<Config>
     {
-        bool isEnabled;
+        public override string Name { get; } = "Shut down the Fucking Server";
+        public override string Prefix { get; } = "SDTFS";
+        public override string Author { get; } = "TheMoogle";
+        public override Version Version { get; } = new Version(2, 0, 0);
+        public override PluginPriority Priority { get; } = PluginPriority.First;
 
-        public override void OnEnable()
+        public override void OnEnabled()
         {
-            LoadConfigs();
-
-            if (!isEnabled) return;
+            base.OnEnabled();
 
             Log.Debug("Epic Server Shutdown/Bootloop brought to you by That Moogle!");
             Log.Debug(":D");
             Process.GetCurrentProcess().Kill();
         }
-
-        public override void OnDisable()
-        {
-            Log.Debug(":)");
-        }
-
-        public override void OnReload()
-        {
-            Log.Debug("Why?");
-        }
-
-        private void LoadConfigs()
-        {
-            isEnabled = Config.GetBool("sdtfs_enabled", true);
-        }
-
-
-        public override string getName { get; } = "Shut Down The Fucking Server";
     }
 }
